@@ -9,7 +9,11 @@
 /*   Updated: 2023/11/26 02:45:30 by aes-sarg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+
+#include "get_next_line_bonus.h"
+#include <unistd.h>
+//#include <stdio.h>
+//#include <fcntl.h>
 
 char	*ft_read_to_temp(int fd, char *temp)
 {
@@ -37,15 +41,45 @@ char	*ft_read_to_temp(int fd, char *temp)
 
 char	*get_next_line(int fd)
 {
+	static char	*temp[FD_SETSIZE];
 	char		*line;
-	static char	*temp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	temp = ft_read_to_temp(fd, temp);
-	if (!temp)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FD_SETSIZE)
 		return (NULL);
-	line = ft_get_line(temp);
-	temp = ft_new_temp(temp);
+	temp[fd] = ft_read_to_temp(fd, temp[fd]);
+	if (!temp[fd])
+		return (NULL);
+	line = ft_get_line(temp[fd]);
+	temp[fd] = ft_new_temp(temp[fd]);
 	return (line);
 }
+
+/*int	main(void)
+{
+	char	*line;
+	int		i;
+	int		fd1;
+	int		fd2;
+	int		fd3;
+	fd1 = open("tests/test.txt", O_RDONLY);
+	fd2 = open("tests/test2.txt", O_RDONLY);
+	fd3 = open("tests/test3.txt", O_RDONLY);
+	i = 1;
+	while (i < 7)
+	{
+		line = get_next_line(fd1);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd2);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd3);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		i++;
+	}
+	close(fd1);
+	close(fd2);
+	close(fd3);
+	return (0);
+}*/

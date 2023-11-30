@@ -1,9 +1,0 @@
-# Ignore main source file
-main.c
-
-# Ignore compiled executables
-a.out
-
-# Ignore other files
-gnl
-test.txt
