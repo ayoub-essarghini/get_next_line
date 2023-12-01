@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aes-sarg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 02:45:30 by aes-sarg          #+#    #+#             */
-/*   Updated: 2023/11/26 02:45:30 by aes-sarg         ###   ########.fr       */
+/*   Created: 2023/11/30 19:11:50 by aes-sarg          #+#    #+#             */
+/*   Updated: 2023/11/30 19:11:58 by aes-sarg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -26,6 +26,7 @@ char	*ft_read_to_temp(int fd, char *temp)
 		if (rd_bytes == -1)
 		{
 			free(buff);
+			free(temp);
 			return (NULL);
 		}
 		buff[rd_bytes] = '\0';

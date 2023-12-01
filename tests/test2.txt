@@ -1,3 +1,0 @@
-Hello from file 2.
-How are you?
-This is the third line from file 2.
